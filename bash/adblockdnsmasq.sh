@@ -11,7 +11,7 @@ now=$(date)
 
 CONFIG_DIR="/home/pen/Documents/config"
 DOMAIN_LIST="${CONFIG_DIR}/adblocklist.txt"
-DNSMASQ_CONF="${CONFIG_DIR}/dnsmasq.adblock.conf"
+DNSMASQ_CONF="${CONFIG_DIR}/adblock.conf"
 TARGET_CONF="/etc/dnsmasq.d/adblock.conf"
 
 mkdir -p "${CONFIG_DIR}"
