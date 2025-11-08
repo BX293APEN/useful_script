@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # cryptography
 from cryptography.hazmat.primitives.asymmetric import ec
 #from cryptography.hazmat.primitives.asymmetric import rsa
