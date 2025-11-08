@@ -2,6 +2,9 @@
 
 set -e
 
+# 手動でブロックしたいドメインを記載(スペース区切り)
+MANUAL_DOMAIN_LIST="temu.com apm.yahoo.co.jp my-best.com"
+
 d=$(date '+%Y%m')
 now=$(date)
 
@@ -35,6 +38,21 @@ EOF
 
     fi
 done < "${DOMAIN_LIST}"
+
+
+for m_domain in ${MANUAL_DOMAIN_LIST}; do
+    if ! grep -qx "${m_domain}" "${DOMAIN_LIST}" 2>/dev/null; then
+        # 既存にないものだけ追加
+        tee -a "${CONFIG_FILE}" << EOF
+zone "${m_domain}" {
+    type master;
+    file "empty.zone";
+};
+
+EOF
+    fi
+done
+
 
 echo "// Update : ${now}" >> "$CONFIG_FILE"
 
