@@ -20,7 +20,7 @@ sleep 20 # 起動するまでスリープ
 curl -o "${DOMAIN_LIST}" -L https://280blocker.net/files/280blocker_domain_${d}.txt
 sed -i '1s/^\xEF\xBB\xBF//' "${DOMAIN_LIST}"
 sed -i '1,/^[^#]/ { /^#/d }' "${DOMAIN_LIST}"
-sed -i 's/^#//' "${DOMAIN_LIST}"
+sed -i 's/^# //' "${DOMAIN_LIST}"
 
 echo "// 広告ブロックリスト" > "$CONFIG_FILE"
 
