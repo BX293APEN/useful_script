@@ -209,9 +209,9 @@ class CreateCACert():
 
 if __name__ == "__main__":
     CreateCACert(
-        certFile                = "certificate.pem", 
+        certFile                = "certificate.crt", 
         privateFile             = "private.key", 
-        caCertFile              = "ca_cert.pem", 
+        caCertFile              = "ca_cert.crt", 
         caprivateKeyFile        = "ca_private.key",
         caKey                   = ec.generate_private_key(ec.SECP256R1()),
         key                     = ec.generate_private_key(ec.SECP256R1()),
