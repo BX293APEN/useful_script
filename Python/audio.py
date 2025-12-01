@@ -60,12 +60,453 @@ if __name__ == "__main__":
     swm = SoundWaveMaker()
     swm.output(
         [
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ") * (2 ** (-1))
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
             swm.get_freq("ド"),
-            swm.get_freq("ミ"),
-            swm.get_freq("ソ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ド"),
+            swm.get_freq("ド") * (2 ** (-1))
             
         ],
         duration    = 1.0,
         wait        = True
     )
+    swm.output(
+        [
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ") * (2 ** (-1))
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 2.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ド") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 0.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ファ#") * (2 ** (-1))
+            
+        ],
+        duration    = 0.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ラ"),
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("シ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("レ") * 2,
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ#"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("レ#") * (2 ** (-1))
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("シ"),
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ド") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ"),
+            swm.get_freq("ファ"),
+            swm.get_freq("ド") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ファ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ") * (2 ** (-2))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(  #
+        [
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ファ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 2.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ラ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ド"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ド") * (2 ** (-1))
+            
+        ],
+        duration    = 1.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 0.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("シ"),
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 2.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ラ"),
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+
+    swm.output(
+        [
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ファ") * (2 ** (-1))
+            
+        ],
+        duration    = 2.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ド") * 2,
+            swm.get_freq("ミ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ") * 2,
+            swm.get_freq("ファ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ"),
+            swm.get_freq("ラ") * (2 ** (-1))
+            
+        ],
+        duration    = 1.0,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ"),
+            swm.get_freq("ソ") * (2 ** (-1))
+            
+        ],
+        duration    = 0.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ"),
+            swm.get_freq("ミ") * (2 ** (-1))
+            
+        ],
+        duration    = 0.5,
+        wait        = True
+    )
+    swm.output(
+        [
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ"),
+            swm.get_freq("レ") * (2 ** (-1))
+            
+        ],
+        duration    = 2.0,
+        wait        = True
+    )
+    
+
     # sleep(5)
