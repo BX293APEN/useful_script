@@ -3,7 +3,7 @@ import requests
 class Webhook:
     def __init__(
         self, 
-        url                 = "https://discord.com/api/webhooks/1466757693145481216/n4aAekRRotqHBJSYBSE4SrXJ9RmszP9bz_ZxMYBgzKh6oIyY5dgaDponbYhsOjdMibN4",
+        url                 = "https://discord.com/api/webhooks/NNNNNNNNNNNNNNNNNN/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         user                = "Webhookユーザ名"
     ):
         self.url            = url
@@ -27,5 +27,7 @@ class Webhook:
         requests.post(self.url, json=data)
 
 if __name__ == "__main__":
-    webhook = Webhook(user = "bx293a_pen")
+    with open("HookURL") as hook:
+        url = hook.read()
+    webhook = Webhook(url = url, user = "bx293a_pen")
     webhook.send("テスト", "テストメッセージ")
