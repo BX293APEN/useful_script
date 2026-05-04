@@ -405,16 +405,22 @@ CFGEOF
     log_info "フォールバック grub.cfg 生成完了"
     log_info "linux 行確認:"
     grep "linux " "$GRUB_CFG" | head -1
-
-    # UEFIの場合はEFIパーティションにもコピー
-    if [[ "$BOOT_MODE" == "uefi" ]]; then
-        mkdir -p "${MNT}/boot/efi/EFI/kali"
-        cp "$GRUB_CFG" "${MNT}/boot/efi/EFI/kali/grub.cfg"
-        mkdir -p "${MNT}/boot/efi/EFI/BOOT"
-        cp "$GRUB_CFG" "${MNT}/boot/efi/EFI/BOOT/grub.cfg" 2>/dev/null || true
-        log_info "grub.cfg → EFIパーティションにもコピーしました"
-    fi
 fi
+
+# grub.cfg を全箇所にコピー（成功・フォールバック共通）
+#   /boot/grub/grub.cfg         ← GRUBが最初に探す場所（生成済み）
+#   /boot/EFI/BOOT/grub.cfg     ← rootfs側/boot内、BIOS/UEFI両方で参照される可能性あり
+#   /boot/efi/EFI/kali/grub.cfg ← EFIパーティション、bootloader-id=kali（UEFIのみ）
+#   /boot/efi/EFI/BOOT/grub.cfg ← --removable のfallback path（UEFIのみ）
+mkdir -p "${MNT}/boot/EFI/BOOT"
+cp "$GRUB_CFG" "${MNT}/boot/EFI/BOOT/grub.cfg"
+if [[ "$BOOT_MODE" == "uefi" ]]; then
+    mkdir -p "${MNT}/boot/efi/EFI/kali"
+    cp "$GRUB_CFG" "${MNT}/boot/efi/EFI/kali/grub.cfg"
+    mkdir -p "${MNT}/boot/efi/EFI/BOOT"
+    cp "$GRUB_CFG" "${MNT}/boot/efi/EFI/BOOT/grub.cfg"
+fi
+log_info "grub.cfg → 4箇所にコピーしました"
 
 # ─────────────────────────────────────────────
 # 9. 明示的アンマウント
