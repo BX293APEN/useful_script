@@ -1,57 +1,57 @@
-RESET="\e[0m"
+RESET="\033[0m"
 
-BOLD="\e[1m"          # 太字
-DIM="\e[2m"           # 薄く
-ITALIC="\e[3m"        # 斜体(非対応端末あり)
-UNDER="\e[4m"         # 下線
-BLINK="\e[5m"         # 点滅
-REVERSE="\e[7m"       # 反転
-HIDE="\e[8m"          # 非表示
-STRIKE="\e[9m"        # 打ち消し線
+BOLD="\033[1m"          # 太字
+DIM="\033[2m"           # 薄く
+ITALIC="\033[3m"        # 斜体(非対応端末あり)
+UNDER="\033[4m"         # 下線
+BLINK="\033[5m"         # 点滅
+REVERSE="\033[7m"       # 反転
+HIDE="\033[8m"          # 非表示
+STRIKE="\033[9m"        # 打ち消し線
 
-FG_BLACK="\e[30m"
-FG_RED="\e[31m"
-FG_GREEN="\e[32m"
-FG_YELLOW="\e[33m"
-FG_BLUE="\e[34m"
-FG_PURPLE="\e[35m"
-FG_CYAN="\e[36m"
-FG_WHITE="\e[37m"
+FG_BLACK="\033[30m"
+FG_RED="\033[31m"
+FG_GREEN="\033[32m"
+FG_YELLOW="\033[33m"
+FG_BLUE="\033[34m"
+FG_PURPLE="\033[35m"
+FG_CYAN="\033[36m"
+FG_WHITE="\033[37m"
 
-FG_BRIGHT_BLACK="\e[90m"
-FG_BRIGHT_RED="\e[91m"
-FG_BRIGHT_GREEN="\e[92m"
-FG_BRIGHT_YELLOW="\e[93m"
-FG_BRIGHT_BLUE="\e[94m"
-FG_BRIGHT_PURPLE="\e[95m"
-FG_BRIGHT_CYAN="\e[96m"
-FG_BRIGHT_WHITE="\e[97m"
+FG_BRIGHT_BLACK="\033[90m"
+FG_BRIGHT_RED="\033[91m"
+FG_BRIGHT_GREEN="\033[92m"
+FG_BRIGHT_YELLOW="\033[93m"
+FG_BRIGHT_BLUE="\033[94m"
+FG_BRIGHT_PURPLE="\033[95m"
+FG_BRIGHT_CYAN="\033[96m"
+FG_BRIGHT_WHITE="\033[97m"
 
-BG_BLACK="\e[40m"
-BG_RED="\e[41m"
-BG_GREEN="\e[42m"
-BG_YELLOW="\e[43m"
-BG_BLUE="\e[44m"
-BG_MAGENTA="\e[45m"
-BG_CYAN="\e[46m"
-BG_WHITE="\e[47m"
+BG_BLACK="\033[40m"
+BG_RED="\033[41m"
+BG_GREEN="\033[42m"
+BG_YELLOW="\033[43m"
+BG_BLUE="\033[44m"
+BG_MAGENTA="\033[45m"
+BG_CYAN="\033[46m"
+BG_WHITE="\033[47m"
 
-BG_BRIGHT_BLACK="\e[100m"
-BG_BRIGHT_RED="\e[101m"
-BG_BRIGHT_GREEN="\e[102m"
-BG_BRIGHT_YELLOW="\e[103m"
-BG_BRIGHT_BLUE="\e[104m"
-BG_BRIGHT_PURPLE="\e[105m"
-BG_BRIGHT_CYAN="\e[106m"
-BG_BRIGHT_WHITE="\e[107m"
+BG_BRIGHT_BLACK="\033[100m"
+BG_BRIGHT_RED="\033[101m"
+BG_BRIGHT_GREEN="\033[102m"
+BG_BRIGHT_YELLOW="\033[103m"
+BG_BRIGHT_BLUE="\033[104m"
+BG_BRIGHT_PURPLE="\033[105m"
+BG_BRIGHT_CYAN="\033[106m"
+BG_BRIGHT_WHITE="\033[107m"
 
 # ===== 256色 =====
-FG_256() { printf "\e[38;5;%sm" "$1"; }
-BG_256() { printf "\e[48;5;%sm" "$1"; }
+FG_256() { printf "\033[38;5;%sm" "$1"; }
+BG_256() { printf "\033[48;5;%sm" "$1"; }
 
 # ===== TrueColor(24bitカラー) =====
-FG_RGB() { printf "\e[38;2;%s;%s;%sm" "$1" "$2" "$3"; }
-BG_RGB() { printf "\e[48;2;%s;%s;%sm" "$1" "$2" "$3"; }
+FG_RGB() { printf "\033[38;2;%s;%s;%sm" "$1" "$2" "$3"; }
+BG_RGB() { printf "\033[48;2;%s;%s;%sm" "$1" "$2" "$3"; }
 
 DISP_STR(){
     for arg in "$@"; do
