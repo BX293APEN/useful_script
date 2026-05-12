@@ -84,9 +84,10 @@ LOG_INFO(){
     local state="INFO"
     local action="${2:-ACTION}"
     local detail="${3:-detail}"
+    local headerSize="${4:-50}"
 
     DISP_STR "${FG_BRIGHT_CYAN}" "${BG_BLACK}"
-    LOG "${name}" "${state}" "${action}" "${detail}"
+    LOG "${name}" "${state}" "${action}" "${detail}" "${headerSize}"
     DISP_STR "${RESET}"
 }
 
@@ -95,9 +96,10 @@ LOG_WARN(){
     local state="WARN"
     local action="${2:-ACTION}"
     local detail="${3:-detail}"
+    local headerSize="${4:-50}"
 
     DISP_STR "${FG_YELLOW}" "${BG_BLACK}"
-    LOG "${name}" "${state}" "${action}" "${detail}"
+    LOG "${name}" "${state}" "${action}" "${detail}" "${headerSize}"
     DISP_STR "${RESET}"
 }
 
@@ -106,9 +108,10 @@ LOG_OK(){
     local state="OK"
     local action="${2:-ACTION}"
     local detail="${3:-detail}"
+    local headerSize="${4:-50}"
 
     DISP_STR "${FG_GREEN}" "${BG_BLACK}"
-    LOG "${name}" "${state}" "${action}" "${detail}"
+    LOG "${name}" "${state}" "${action}" "${detail}" "${headerSize}"
     DISP_STR "${RESET}"
 }
 
@@ -117,9 +120,10 @@ LOG_ERROR(){
     local state="ERROR"
     local action="${2:-ACTION}"
     local detail="${3:-detail}"
+    local headerSize="${4:-50}"
 
     DISP_STR "${FG_RED}" "${BG_BLACK}"
-    LOG "${name}" "${state}" "${action}" "${detail}"
+    LOG "${name}" "${state}" "${action}" "${detail}" "${headerSize}"
     DISP_STR "${RESET}"
 }
 
@@ -128,8 +132,9 @@ LOG_FAIL(){
     local state="FAIL"
     local action="${2:-ACTION}"
     local detail="${3:-detail}"
+    local headerSize="${4:-50}"
 
     DISP_STR "$(FG_RGB 204 51 0)" "${BG_BLACK}"
-    LOG "${name}" "${state}" "${action}" "${detail}"
+    LOG "${name}" "${state}" "${action}" "${detail}" "${headerSize}"
     DISP_STR "${RESET}"
 }
