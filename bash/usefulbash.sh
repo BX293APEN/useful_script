@@ -73,10 +73,10 @@ LOG(){
     local action=$(trim "${3:-ACTION}")
     local nowtime="$(date '+%Y/%m/%d %H:%M:%S')"
     local detail=$(trim "${4:-log detail}")
-    local header="[${name}][${state}][${action}"
+    local header="[${name}][${state}][${action}]"
     local headerSize="${5:-50}"
     
-    printf "%-${headerSize}s] %s %s\n" "${header}" "${nowtime}" "${detail}"
+    printf "%-${headerSize}s %s %s\n" "${header}" "${nowtime}" "${detail}"
 }
 
 LOG_INFO(){
