@@ -302,13 +302,13 @@ class PNG2SVG:
 
 
 if __name__ == "__main__":
-    config    = ARGConfig()
-    if not Path(config.inputPath).exists():
-        svgPath = input("変換するSVGパス : ")
+    config  = ARGConfig()
+    if config.inputPath and Path(config.inputPath).exists():
+        pngPath = config.inputPath
     else:
-        svgPath = config.inputPath
+        pngPath = input("変換するPNGパス : ")
     converter = PNG2SVG(
-        svgPath, 
+        pngPath, 
         config.threshold, 
         config.smooth, 
         config.defaultStroke, 
