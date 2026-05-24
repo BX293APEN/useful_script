@@ -1,29 +1,20 @@
 #!/usr/bin/env python3
-"""
-SVG to PNG converter with CSS variable resolution and custom font support.
-Usage: python3 svg_to_png.py <input.svg> [output.png] [--scale N]
-"""
-
-import argparse, re, sys
-from pathlib import Path
 
 # pip install cairosvg
 import cairosvg
-
+import re, sys, os
 
 class SVG2PNG:
+    FONT_REPLACE_TARGETS: list[str] = [
+        "'HGPGothicE', 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif",
+    ]
+
     # 使用するフォント名（システムにインストール済みであること）
     FONT_FAMILY = "HGPGothicE"
 
-    # 置き換え対象のフォントファミリー文字列（SVG内に複数パターンある場合は追加）
-    FONT_REPLACE_TARGETS: list[str] = [
-        "'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif",
-    ]
-
-    # ============================================================
-    # 処理関数
-    # ============================================================
-
+    def set_font(self, font = "HGPGothicE"):
+        self.FONT_FAMILY = font
+    
     def extract_css_variables(self, svg: str) -> dict[str, str]:
         """SVGの <style> タグ内の :root ブロックからCSS変数を抽出して辞書で返す。"""
         variables: dict[str, str] = {}
@@ -83,61 +74,47 @@ class SVG2PNG:
             svg = svg.replace(target, replacement)
         return svg
 
-
-    def convert(
-        self,
-        svg_path: str, 
-        output_path: str, 
-        scale: float = 2.0
-    ) -> None:
-        src = Path(svg_path)
-        if not src.exists():
-            print(f"[ERROR] ファイルが見つかりません: {svg_path}", file=sys.stderr)
-            sys.exit(1)
-
-        svg = src.read_text(encoding="utf-8")
-
-        # <style>タグからCSS変数を自動抽出して解決
-        css_vars = self.extract_css_variables(svg)
-        svg = self.resolve_css_variables(svg, css_vars)
-
-        # フォントを置換
-        svg = self.replace_font_family(svg, self.FONT_REPLACE_TARGETS, self.FONT_FAMILY)
-
-        # PNG に変換
-        cairosvg.svg2png(
-            bytestring=svg.encode("utf-8"),
-            write_to=output_path,
-            scale=scale,
-        )
-        print(f"[OK] 変換完了: {output_path}")
-
-
     # ============================================================
     # エントリポイント
     # ============================================================
 
-    def __init__(self) -> None:
-        parser = argparse.ArgumentParser(
-            description="SVGをPNGに変換します（CSS変数・フォント置換つき）"
-        )
-        parser.add_argument("input", help="入力SVGファイルのパス")
-        parser.add_argument(
-            "output",
-            nargs="?",
-            help="出力PNGファイルのパス（省略時は入力と同名の.png）",
-        )
-        parser.add_argument(
-            "--scale",
-            type=float,
-            default=2.0,
-            help="出力解像度の倍率（デフォルト: 2.0）",
-        )
-        args = parser.parse_args()
+    def __init__(
+        self,
+        svgPath: str, 
+        outputPath: str, 
+        scale: float = 2.0
+    ):
+        if not os.path.exists(svgPath):
+            print(f"[ERROR] ファイルが見つかりません: {svgPath}", file=sys.stderr)
+            sys.exit(1)
 
-        output = args.output or str(Path(args.input).with_suffix(".png"))
-        self.convert(args.input, output, args.scale)
+        
+        with open(svgPath, "r", encoding="utf-8") as f:
+            svg = f.read()
 
+        # <style>タグからCSS変数を自動抽出して解決
+        css_vars    = self.extract_css_variables(svg)
+        svg         = self.resolve_css_variables(svg, css_vars)
+
+        # フォントを置換
+        svg         = self.replace_font_family(svg, self.FONT_REPLACE_TARGETS, self.FONT_FAMILY)
+
+        # PNG に変換
+        cairosvg.svg2png(
+            bytestring=svg.encode("utf-8"),
+            write_to=outputPath,
+            scale=scale,
+        )
+        print(f"[OK] 変換完了: {outputPath}")
 
 if __name__ == "__main__":
-    SVG2PNG()
+    svgPath    = input("SVGファイルパス : ")
+    defaultOut = os.path.splitext(svgPath)[0] + ".png"
+    outPath    = input(f"出力ファイルパス (デフォルト : {defaultOut}) : ").strip() or defaultOut
+    scaleInput = input("倍率 (デフォルト : 2.0) : ").strip()
+    try:
+        scale = float(scaleInput) if scaleInput else 2.0
+    except ValueError:
+        print("[WARNING] 倍率の値が不正なため、デフォルト値 2.0 を使用します。", file=sys.stderr)
+        scale = 2.0
+    SVG2PNG(svgPath, outPath, scale)
