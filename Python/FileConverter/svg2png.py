@@ -109,7 +109,7 @@ class SVG2PNG:
 
 if __name__ == "__main__":
     svgPath    = input("SVGファイルパス : ")
-    defaultOut = os.path.splitext(svgPath)[0] + ".png"
+    defaultOut = f"{os.path.splitext(svgPath)[0]}.png"
     outPath    = input(f"出力ファイルパス (デフォルト : {defaultOut}) : ").strip() or defaultOut
     scaleInput = input("倍率 (デフォルト : 2.0) : ").strip()
     try:
