@@ -21,9 +21,9 @@ ram_amount() {
     name=$(echo "$info" | awk '{print $1}')
     pid=$(echo "$info" | awk '{print $2}')
 
-    local rss vm_peak
+    local rss hwm
     rss=$(grep VmRSS /proc/"$pid"/status 2>/dev/null | awk '{print $2}')
-    vm_peak=$(grep VmPeak /proc/"$pid"/status 2>/dev/null | awk '{print $2}')
+    hwm=$(grep VmHWM /proc/"$pid"/status 2>/dev/null | awk '{print $2}')
 
     if [[ -z "$rss" ]]; then
         echo "Error: PID $pid の情報を取得できません" >&2
@@ -35,5 +35,5 @@ ram_amount() {
     local columnSize=20
 
     printf "%-${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "Name" "PID" "RAM[KB]" "RAM[KB] (Maximum)"
-    printf "%-${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "${name}" "${pid}" "${rss}" "${vm_peak}"
+    printf "%-${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "${name}" "${pid}" "${rss}" "${hwm}"
 }
