@@ -3,7 +3,7 @@
 get_pid() {
     local program_name="$1"
     local pid
-    pid=$(pgrep -x "$program_name" | head -1)
+    pid=$(pgrep -f "$program_name" | head -1)
 
     if [[ -z "$pid" ]]; then
         echo "Error: '$program_name' が見つかりません" >&2
