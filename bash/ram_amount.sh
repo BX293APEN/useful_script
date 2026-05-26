@@ -30,10 +30,10 @@ ram_amount() {
         return 1
     fi
 
-    local nameSize=10
-    local pidSize=7
-    local columnSize=15
+    local nameSize=40
+    local pidSize=10
+    local columnSize=20
 
-    printf "%-${nameSize}s %-${pidSize}s %-${columnSize}s %-${columnSize}s\n" "プログラム名" "PID" "現在のRAM" "最大RAM"
-    printf "%-${nameSize}s %-${pidSize}s %-${columnSize}s %-${columnSize}s\n" "${name}" "${pid}" "${rss}" "${vm_peak}"
+    printf "%${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "Name" "PID" "RAM[KB]" "RAM[KB] (Maximum)"
+    printf "%${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "${name}" "${pid}" "${rss}" "${vm_peak}"
 }
