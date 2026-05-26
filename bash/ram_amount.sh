@@ -34,6 +34,6 @@ ram_amount() {
     local pidSize=10
     local columnSize=20
 
-    printf "%${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "Name" "PID" "RAM[KB]" "RAM[KB] (Maximum)"
-    printf "%${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "${name}" "${pid}" "${rss}" "${vm_peak}"
+    printf "%-${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "Name" "PID" "RAM[KB]" "RAM[KB] (Maximum)"
+    printf "%-${nameSize}s %${pidSize}s %${columnSize}s %${columnSize}s\n" "${name}" "${pid}" "${rss}" "${vm_peak}"
 }
