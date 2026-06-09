@@ -124,7 +124,7 @@ const uint8_t
     __attribute__((section(".rodata"))) 
     __attribute__((aligned(4)))
     {self.varName}[]"""
-            lenDecl = f"const size_t {self.varName}_len = sizeof({self.varName});"
+            lenDecl = f"const size_t {self.varName}_len = {len(der)};"
             header = """#include <stdint.h>
 #include <stddef.h>"""
         else:
