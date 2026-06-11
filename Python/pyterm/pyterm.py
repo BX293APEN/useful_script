@@ -74,7 +74,7 @@ class SendUARTData:
         encoding: str  = "UTF-8",
         lineEnd: str   = "\n",
     ):
-        self.encoding = encoding if encoding else None
+        self.encoding = encoding.strip() if encoding.strip() else None
         self.lineEnd  = lineEnd
 
         self.serialPort = serial.Serial(
@@ -252,7 +252,7 @@ class Pyterm:
             baudrate        = formatted_prompt("baudrate",       115200)
             dtrReset        = formatted_prompt("起動時DTRリセット?", False)
             newline         = formatted_prompt("改行コード : [CRLF/LF]", "LF")
-            enc_raw         = input("encoding (Space + Enter でバイト列モード) [UTF-8]: ").strip()
+            enc_raw         = formatted_prompt("encoding (Space + Enter でバイト列モード)", "UTF-8")
             encoding        = enc_raw if enc_raw else ""
 
             if newline.lower() == "crlf":
