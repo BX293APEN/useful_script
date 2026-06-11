@@ -1,0 +1,14 @@
+{
+    "COM4" : {
+        "device" : "BLE_CENTRAL"
+    },
+    "COM6" : {
+        "device" : "BLE"
+    },
+    "COM3":{
+        "device" : "GPS"
+    },
+    "COM5" : {
+        "device" : "赤外線"
+    }
+}
