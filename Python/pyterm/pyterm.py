@@ -143,7 +143,7 @@ class SendUARTData:
 
     def rx_uart_data_ln(self) -> str:
         """lineEnd が現れるまで 1 バイトずつ読み込み、1 行分を返す"""
-        line_end_bytes = self.encode(self.lineEnd)
+        line_end_bytes = self.lineEnd.encode()
 
         buf = bytearray()
         while True:
@@ -186,6 +186,7 @@ class Pyterm:
     CONFIG_PATH = "config/COM.json"
 
     def __init__(self, interval: float = 0.0001):
+        self.newline        = "\n"
         self.interval       = interval
         self.last_rx        = ""
         self._stop_flag     = False
@@ -282,6 +283,8 @@ class Pyterm:
                         except KeyboardInterrupt:
                             print("\n[切断]")
                             break
+                        except Exception as e:
+                            print(e)
 
             except serial.SerialException as e:
                 print(f"[エラー] シリアルポートを開けませんでした: {e}")
