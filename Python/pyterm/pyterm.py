@@ -149,7 +149,7 @@ class SendUARTData:
         while True:
             b = self.serialPort.read(1)
             if not b:   # タイムアウト
-                break
+                continue
             buf += b
             if buf.endswith(line_end_bytes):
                 break
