@@ -198,7 +198,7 @@ class Pyterm:
     def _rx_loop(self, uart: SendUARTData) -> None:
         try:
             while not self._stop_flag:
-                print(uart.rx_uart_data_ln())
+                print(uart.rx_uart_data_ln().replace("\r", "").replace("\n", ""))
                 time.sleep(self.interval)
         except Exception as e:
             print(f"[rx_loop] エラー: {e}")
