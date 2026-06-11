@@ -244,9 +244,10 @@ class Pyterm:
 
             # --- 接続設定 ---
             print()
-            raw_port = input("COMポート番号 (q で終了) > COM").strip()
-            if raw_port.lower() == "q":
+            raw_port        = formatted_prompt("COMポート番号 (0未満で終了)", 8)
+            if raw_port < 0:
                 print("終了します")
+                input()
                 break
 
             port            = f"COM{raw_port}"
