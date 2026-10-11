@@ -1,12 +1,15 @@
 from PIL import Image, ImageFilter
-import os, subprocess
+import os, subprocess, re
 
 class png2icon():
     def __init__(self, filePath, extension = "ico"):
         self.file                       = filePath
         self.baseExtension              = os.path.splitext(self.file)[1].lower()
         self.extension                  = extension.lower()
-        self.saveFile                   = f"{os.path.splitext(self.file)[0]}.{self.extension}"
+        mark                            = ""
+        if self.baseExtension           == self.extension:
+            mark                        = "_"
+        self.saveFile                   = f"{mark}{os.path.splitext(self.file)[0]}.{self.extension}"
         if self.baseExtension           != ".mp4":
             self.im                     = Image.open(self.file)
         
@@ -62,6 +65,14 @@ class png2icon():
             option = []
             if self.extension == "webp":
                 option = ["-vcodec", "libwebp"]
+            
+            elif self.extension == "webm":
+                option = [
+                    "-c:v", "libvpx-vp9",
+                    "-b:v", "0",
+                    "-crf", "18",        # 高画質
+                    "-pix_fmt", "yuv420p",
+                ]
 
             for o in option:
                 cmd.append(o)
