@@ -1,4 +1,6 @@
-import re, json, serial, threading, time
+#!/usr/bin/env python3
+
+import re, json, serial, threading, time, platform
 from serial.tools import list_ports
 from typing import Optional
 
@@ -127,6 +129,9 @@ class SendUARTData:
     def tx_uart_data(self, data: str) -> None:
         self.serialPort.write(self.encode(data))
 
+    def tx_uart_cmd(self, data: str) -> None:
+        self.serialPort.write(self.encode(f"{data}{self.lineEnd}"))
+
     # ------------------------------------------------------------------
     # 受信
     # ------------------------------------------------------------------
@@ -173,28 +178,22 @@ class SendUARTData:
         self.serialPort.dtr = False
 
 
-# ---------------------------------------------------------------------------
-# Pyterm  –  マルチスレッド端末
-# ---------------------------------------------------------------------------
 
 class Pyterm:
-    """
-    SendUARTData をラップし、受信スレッドの管理と
-    インタラクティブ端末のUIを担うクラス。
-    """
-
-    CONFIG_PATH = "config/COM.json"
-
-    def __init__(self, interval: float = 0.0001):
+    def __init__(self, interval: float = 0.0001, CONFIG_PATH = "config/COM.json"):
         self.newline        = "\n"
         self.interval       = interval
         self.last_rx        = ""
         self._stop_flag     = False
         self._rx_thread: Optional[threading.Thread] = None
+        self.CONFIG_PATH    = CONFIG_PATH
+        try:
+            with open(self.CONFIG_PATH, encoding="UTF-8") as f:
+                self.port_config = json.load(f)
+        except Exception as e:
+            print(e)
+            self.port_config = {}
 
-    # ------------------------------------------------------------------
-    # 受信スレッド
-    # ------------------------------------------------------------------
 
     def _rx_loop(self, uart: SendUARTData) -> None:
         try:
@@ -218,126 +217,83 @@ class Pyterm:
         """受信スレッドを停止する"""
         self._stop_flag = True
 
-    # ------------------------------------------------------------------
-    # インタラクティブ端末 UI
-    # ------------------------------------------------------------------
 
-    def run(self) -> None:
+    def serial_check(self):
+        serial_list = check_serial()
+        if not serial_list:
+            print("利用可能なシリアルポートが見つかりません")
+        else:
+            print("\n─── 利用可能なポート ───")
+            for sp in serial_list:
+                label = self.port_config.get(sp, {}).get("device", "未登録デバイス")
+                print(f"{sp} : {label}")
+        print()
+
+    def setup_config(self):
         """ポート選択から送受信までのメインループ"""
-        try:
-            with open(self.CONFIG_PATH, encoding="UTF-8") as f:
-                port_config = json.load(f)
-        except Exception as e:
-            print(e)
-            port_config = {}
-
-        while True:
-            # --- ポート一覧表示 ---
-            serial_list = check_serial()
-            if not serial_list:
-                print("利用可能なシリアルポートが見つかりません")
-            else:
-                print("\n─── 利用可能なポート ───")
-                for sp in serial_list:
-                    label = port_config.get(sp, {}).get("device", "未登録デバイス")
-                    print(f"{sp} : {label}")
-
-            # --- 接続設定 ---
-            print()
-            raw_port        = formatted_prompt("COMポート番号 (0未満で終了)", 8)
+        os_name         = platform.system()
+        if os_name == "Windows":
+            raw_port    = formatted_prompt("COMポート番号 (0未満で終了)", 8)
             if raw_port < 0:
                 print("終了します")
                 input()
-                break
+                return None
+            port        = f"COM{raw_port}"
+        else:
+            port        = formatted_prompt("ポート番号", "/dev/ttyUSB0")
+            
+        baudrate        = formatted_prompt("baudrate",       115200)
+        dtrReset        = formatted_prompt("起動時DTRリセット?", False)
+        newline         = formatted_prompt("改行コード : [CRLF/LF/CR]", "LF")
+        enc_raw         = formatted_prompt("encoding (Space + Enter でバイト列モード)", "UTF-8")
+        encoding        = enc_raw if enc_raw else ""
+        if newline.lower() == "crlf":
+            self.newline  = "\r\n"
+        elif newline.lower() == "cr":
+            self.newline  = "\r"
+        else:
+            self.newline = "\n"
+        print(f"\n  接続先 : {port}  baudrate={baudrate}  dtrReset={dtrReset}")
+        print(f"  encoding: {encoding or 'bytes mode'}  改行コード={newline.lower()}")
+        print("  送信 : テキストを入力して Enter  / Ctrl+C で切断\n")
 
-            port            = f"COM{raw_port}"
-            baudrate        = formatted_prompt("baudrate",       115200)
-            dtrReset        = formatted_prompt("起動時DTRリセット?", False)
-            newline         = formatted_prompt("改行コード : [CRLF/LF]", "LF")
-            enc_raw         = formatted_prompt("encoding (Space + Enter でバイト列モード)", "UTF-8")
-            encoding        = enc_raw if enc_raw else ""
+        return {
+            "port" : port,
+            "baudrate" : baudrate,
+            "dtrReset" : dtrReset,
+            "encoding" : encoding,
+            "lineEnd" : self.newline
+        }
 
-            if newline.lower() == "crlf":
-                self.newline  = "\r\n"
-            else:
-                self.newline = "\n"
-
-            print(f"\n  接続先 : {port}  baudrate={baudrate}  dtrReset={dtrReset}")
-            print(f"  encoding: {encoding or 'bytes mode'}  改行コード={newline.lower()}")
-            print("  送信 : テキストを入力して Enter  / Ctrl+C で切断\n")
-
+if __name__ == "__main__":
+    pyterm = Pyterm()
+    while True:
+        pyterm.serial_check()
+        config = pyterm.setup_config()
+        if config is not None:
             try:
                 with SendUARTData(
-                    port     = port,
-                    baudrate = baudrate,
+                    port     = config["port"],
+                    baudrate = config["baudrate"],
                     timeout  = 0.1,
-                    dtrReset = dtrReset,
-                    encoding = encoding,
-                    lineEnd  = self.newline
+                    dtrReset = config["dtrReset"],
+                    encoding = config["encoding"],
+                    lineEnd  = config["lineEnd"]
                 ) as uart:
                     time.sleep(0.5)
-                    self.start(uart)
-
+                    pyterm.start(uart)
                     while True:
                         try:
-                            uart.tx_uart_data(input())
+                            uart.tx_uart_cmd(input())
                         except KeyboardInterrupt:
                             print("\n[切断]")
                             break
                         except Exception as e:
                             print(e)
-
             except serial.SerialException as e:
                 print(f"[エラー] シリアルポートを開けませんでした: {e}")
             finally:
-                self.stop()
+                pyterm.stop()
                 time.sleep(0.05)
-
-# ---------------------------------------------------------------------------
-# テストコード
-# ---------------------------------------------------------------------------
-
-def _run_tests() -> None:
-    print("=== pyterm.py 自己テスト ===\n")
-
-    print(f"[check_serial] 検出ポート: {check_serial()}")
-
-    u_bytes        = object.__new__(SendUARTData)
-    u_bytes.encoding = None
-    u_str          = object.__new__(SendUARTData)
-    u_str.encoding   = "UTF-8"
-
-    encode_cases = [
-        ("FF 01 02",     bytes([0xFF, 0x01, 0x02])),
-        ("0xFF 0x01",    bytes([0xFF, 0x01])),
-        ("ff0102",       bytes([0xFF, 0x01, 0x02])),
-        ("0xFF0x010x02", bytes([0xFF, 0x01, 0x02])),
-    ]
-    for tx, expected in encode_cases:
-        result = u_bytes.encode(tx)
-        status = "OK" if result == expected else f"FAIL (got {result!r})"
-        print(f"  encode bytes ({tx!r:20}) → {result.hex()} [{status}]")
-
-    raw = bytes([0xDE, 0xAD, 0xBE, 0xEF])
-    result_str = u_bytes.decode(raw)
-    ok = "OK" if result_str == "DE AD BE EF" else "FAIL"
-    print(f"  decode bytes ({raw!r}) → {result_str!r} [{ok}]")
-
-    result_bytes = u_str.encode("hello")
-    ok = "OK" if result_bytes == b"hello" else "FAIL"
-    print(f"  encode str   ('hello') → {result_bytes!r} [{ok}]")
-
-    result_str2 = u_str.decode(b"hello")
-    ok = "OK" if result_str2 == "hello" else "FAIL"
-    print(f"  decode str   (b'hello') → {result_str2!r} [{ok}]")
-
-    print("\n=== テスト完了 ===")
-
-
-
-if __name__ == "__main__":
-    import sys
-    if "--test" in sys.argv:
-        _run_tests()
-    else:
-        Pyterm().run()
+        else:
+            break
