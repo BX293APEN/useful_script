@@ -7,7 +7,7 @@ class png2icon():
         self.baseExtension              = os.path.splitext(self.file)[1].lower()
         self.extension                  = extension.lower()
         mark                            = ""
-        if self.baseExtension           == self.extension:
+        if self.baseExtension           == f".{self.extension}":
             mark                        = "_"
         self.saveFile                   = f"{os.path.splitext(self.file)[0]}{mark}.{self.extension}"
         if self.baseExtension           != ".mp4":
