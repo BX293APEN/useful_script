@@ -253,12 +253,14 @@ class Pyterm:
             port            = f"COM{raw_port}"
             baudrate        = formatted_prompt("baudrate",       115200)
             dtrReset        = formatted_prompt("起動時DTRリセット?", False)
-            newline         = formatted_prompt("改行コード : [CRLF/LF]", "LF")
+            newline         = formatted_prompt("改行コード : [CRLF/LF/CR]", "LF")
             enc_raw         = formatted_prompt("encoding (Space + Enter でバイト列モード)", "UTF-8")
             encoding        = enc_raw if enc_raw else ""
 
             if newline.lower() == "crlf":
                 self.newline  = "\r\n"
+            elif newline.lower() == "cr":
+                self.newline  = "\r"
             else:
                 self.newline = "\n"
 
